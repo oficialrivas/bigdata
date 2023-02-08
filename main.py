@@ -25,7 +25,7 @@ def p_consulta():
     collection = mongodb(db_conn, 'Database',
                          'datos_personales')  # placeholder
     c_qry = {'cedula': cedula}
-    return jsonify(dbquery(collection, c_qry))
+    return jsonify(dbquery(collection, c_qry)), 200
 
 
 @api.route('/consulta/vehiculo')
@@ -33,7 +33,7 @@ def v_consulta():
     matricula = request.args.get('matricula')
     collection = mongodb(db_conn, 'Database', 'datos_vehiculo')  # placeholder
     c_qry = {'matricula': matricula}
-    return jsonify(dbquery(collection, c_qry))
+    return jsonify(dbquery(collection, c_qry)), 200
 
 
 if __name__ == '__main__':
