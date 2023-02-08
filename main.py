@@ -10,7 +10,7 @@ from mongocon import *
 
 
 # Conexion a la base datos mongoDB
-# db_conn = mongoconn(localhost,8888)
+db_conn = mongoconn('localhost', 8888)
 
 app = Flask(__name__)
 
@@ -22,8 +22,17 @@ args_parser = reqparse.RequestParser()
 @api.route('/consulta/persona')
 def p_consulta():
     cedula = request.args.get('cedula')
-    collection = 'persona'  # placeholder
+    collection = mongodb(db_conn, 'Database',
+                         'datos_personales')  # placeholder
     c_qry = {'cedula': cedula}
+    return jsonify(dbquery(collection, c_qry))
+
+
+@api.route('/consulta/vehiculo')
+def v_consulta():
+    matricula = request.args.get('matricula')
+    collection = mongodb(db_conn, 'Database', 'datos_vehiculo')  # placeholder
+    c_qry = {'matricula': matricula}
     return jsonify(dbquery(collection, c_qry))
 
 
