@@ -36,6 +36,27 @@ def v_consulta():
     return jsonify(dbquery(collection, c_qry)), 200
 
 
+@app.route('/comparar/persona', methods=['POST'])
+def compare():
+    # Datos
+    cedula = request.args.get('cedula')
+    nombre = request.args.get('nombre')
+    apellido = request.args.get('apellido')
+
+    # Coleccion MongoDB
+    collection = mongodb(db_conn, 'Database',
+                         'datos_personales')
+
+    # Peticion con encontrar unico
+    query = {"cedula": cedula, "nombre": nombre, "apellido": apellido}
+    result = collection.find_one(query)
+
+    if result is not None:
+        return {"status": "success"}
+
+    return {"status": "failure"}
+
+
 if __name__ == '__main__':
     try:
         host = '0.0.0.0'
